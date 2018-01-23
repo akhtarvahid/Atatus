@@ -4,6 +4,20 @@ var mongojs=require('mongojs');
 var db=mongojs('testcases',['testcases']);
 var bodyParser = require('body-parser');
 
+const Nightmare = require('nightmare')
+Nightmare({
+    show: true,
+    waitTimeout: 5000 // increase the default timeout to test things
+})
+    .goto('http://localhost:3333/')
+    .evaluate(() => document.querySelector('input[name="login"]'))
+    .end()
+    .then(result => {
+        console.log(`Fetching data from UI to store status in db:\n${result}`)
+    })
+    .catch(error => console.error(error))
+
+
 app.use(express.static(__dirname + "/"))
 app.use(bodyParser.json());
 
