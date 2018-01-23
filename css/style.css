@@ -1,0 +1,19 @@
+.list-group{
+	margin-bottom: 0;
+}
+.navbar-inverse {
+    background-color: #22222212;
+    border-color: #080808;
+    border: none;
+}
+li:hover{
+	background: darkslategray;
+	cursor: pointer;
+}
+.nav li a{
+    font-size: 16px;
+    font-weight: 700;
+}
+.table{
+	background-color: grey;
+}
