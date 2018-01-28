@@ -5,41 +5,43 @@ var db=mongojs('testcases',['testcases']);
 var bodyParser = require('body-parser');
 
 const Nightmare = require('nightmare')
-Nightmare({
-    show: true,
-    waitTimeout: 5000 // increase the default timeout to test things
-})
-    .goto('http://localhost:3333/')
-    .evaluate(() => document.querySelector('input[name="login"]'))
-    .end()
-    .then(result => {
-        console.log(`Fetching data from UI to store status in db:\n${result}`)
-    })
-    .catch(error => console.error(error))
-
 
 app.use(express.static(__dirname + "/"))
 app.use(bodyParser.json());
 
 app.post('/testcases',function(req,res) {
-	//console.log(req.body);
+    
+    Nightmare()
+    .goto('http://localhost:3333/')
+    .wait(5000)
+    .evaluate(() => document.querySelector('#commond').innerText)
+    .end()
+    .then(result => {
+      if(result == req.body.description){
+            req.body.status=true;
+      }else{
+        console.log('error');
+      }
+        
+    })
+    .catch(error => console.error(error))
+   
+
 	db.testcases.insert(req.body,function(err,doc){
-		res.json(doc);
+    res.json(doc);
 	})
 })
 
 app.get('/testcases',function(req, res){
 	db.testcases.find(function(err, docs){
-		//console.log(docs);
-		res.json(docs);
+    res.json(docs);
 	});
 });
 
 app.get('/testcases/:id',function(req,res){
    var id=req.params.id;
-   //console.log(id);
    db.testcases.findOne({_id:mongojs.ObjectId(id)},function(err,doc){
-   	res.json(doc);
+    res.json(doc);
    });
 });
 
@@ -52,7 +54,6 @@ app.put('/testcases/:id',function(req,res){
     	// refresh();
  });
 });
-
 
 
 
