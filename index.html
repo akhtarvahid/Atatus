@@ -33,29 +33,25 @@
     	<tbody>
     	    <tr>
     	    	<td><input class="form-control" ng-model="contact.title"></td>
-    	    	<td><input class="form-control" ng-model="contact.description"></td>
+    	    	<td><input class="form-control" name="desc" ng-model="contact.description"></td>
     	    	<td><button class="btn btn-primary" ng-click="add()">Add It</button>
     	    	<button class="btn btn-info" ng-click="update()">Update</button></td>
     	    </tr>
             
 
-          <div class="list-group" ng-repeat="contact in testcases">
+          <div class="list-group" ng-repeat="contact in testcases track by $index">
             <div href="#" class="list-group-item">
               <div style="word-wrap: break-word;">
                 <h3 class="list-group-item-heading">{{contact.title}}</h3>
-                <span class="list-group-item-text">{{contact.description}}</span>
-                </div>
+                <span class="list-group-item-text" id="commond">{{contact.description}}</span>
+              </div>
               <button class="btn btn-primary" ng-click="edit(contact._id)">Edit Content</button>
-              
+              <span class="btn btn-info" id="clickIt" ng-click="runIt()">Run it</span>
+              <span class="btn btn-default" id="st">{{contact.status}}</span>
             </div>
           </div> 
 
-<!--     		<tr ng-repeat="contact in testcases" class="row">
-    			<td class="col-md-3">{{contact.title}}</td>
-    			<td class="col-md-6">{{contact.description}}</td>
-    			<td class="col-md-3"><button class="btn btn-danger" ng-click="remove(contact._id)">Remove</button>
-    			<button class="btn btn-primary" ng-click="edit(contact._id)">Edit</button></td>
-    		</tr> -->
+     		
     	</tbody>
     </table>
 
